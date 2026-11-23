@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Used to & Didn't use to | 30 Activities</title>
+<style>
+:root{--navy:#10243d;--blue:#176b87;--coral:#ff806e;--ink:#203247;--green:#21845a;--red:#c34d4d}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#e5f7f5,#fff3e9);font-family:Arial,sans-serif;color:var(--ink)}
+header{background:var(--navy);color:white;padding:30px 18px;text-align:center}header .tag{display:inline-block;background:#244a65;padding:7px 13px;border-radius:30px;font-size:12px;letter-spacing:1px}
+h1{font-size:clamp(28px,5vw,48px);margin:14px 0 8px}header p{margin:0;color:#d9e9f0}
+main{max-width:980px;margin:24px auto;padding:0 16px 40px}.panel{background:white;border-radius:18px;padding:20px;box-shadow:0 8px 28px #17354a12;margin-bottom:18px}
+.progress-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-weight:bold}.track{height:10px;background:#e8eff1;border-radius:20px;overflow:hidden;margin-top:12px}#bar{height:100%;width:0;background:linear-gradient(90deg,#27a6a0,#ff9a75);transition:width .25s}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}button{border:0;border-radius:12px;padding:12px 17px;font-weight:bold;cursor:pointer;font-size:14px}.tab{background:#e8f1f3;color:var(--navy)}.tab.active{background:var(--blue);color:white}
+.question{font-size:21px;font-weight:bold;line-height:1.4;margin:12px 0 18px}.small{color:#65788a;font-size:14px}.options{display:grid;gap:10px}.option{width:100%;text-align:left;background:#f2f7f8;color:var(--ink);border:2px solid transparent}.option:hover{border-color:#80c9c6}.option:disabled{cursor:default;opacity:1}.option.correct{background:#e5f6ed;border-color:#67bd91;color:#17613e}.option.wrong{background:#fff0ee;border-color:#e99a90;color:#923c37}
+.feedback{min-height:28px;margin-top:14px;font-weight:bold}.feedback.good{color:var(--green)}.feedback.bad{color:var(--red)}.actions{display:flex;justify-content:space-between;gap:10px;margin-top:20px;flex-wrap:wrap}.primary{background:var(--coral);color:#fff}.secondary{background:#e9eff2;color:var(--navy)}.primary:disabled{opacity:.45;cursor:not-allowed}
+#result{display:none;text-align:center}.score{font-size:54px;font-weight:800;color:var(--blue);margin:10px}footer{text-align:center;color:#607487;font-size:12px;padding:10px}
+@media(max-width:560px){.panel{padding:16px}.question{font-size:18px}.actions button{flex:1}}
+</style></head>
+<body>
+<header><span class="tag">ENGLISH • GRAMMAR PRACTICE</span><h1>USED TO &amp; DIDN'T USE TO</h1><p>30 interactive activities · Past habits and situations</p></header>
+<main><section class="panel">
+<div class="progress-top"><span id="sectionName">Part 1 · Used to</span><span id="counter">Activity 1 of 30</span></div><div class="track"><div id="bar"></div></div>
+<div class="tabs"><button class="tab active" id="tabUsed" onclick="switchPart(0)">1–15 · Used to</button><button class="tab" id="tabDidnt" onclick="switchPart(1)">16–30 · Didn't use to</button></div>
+<p class="small">Choose the correct answer. You can move between activities and check your result at the end.</p>
+<div id="quiz"><div class="question" id="prompt"></div><div class="options" id="options"></div><div class="feedback" id="feedback" aria-live="polite"></div>
+<div class="actions"><button class="secondary" onclick="previous()">← Previous</button><button class="primary" id="next" onclick="next()" disabled>Next →</button></div></div>
+<div id="result"><h2>Great work!</h2><div class="score" id="score">0/30</div><p id="message"></p><button class="primary" onclick="restart()">Try again</button></div>
+</section><section class="panel"><h2>Quick grammar reminder</h2><p><strong>Used to + base verb</strong> describes past habits or situations that are no longer true.</p><p><strong>Didn't use to + base verb</strong> describes things that were not true or did not happen in the past.</p><p class="small">Example: I used to play outside. / I didn't use to like broccoli.</p></section></main>
+<footer>Keep learning, one activity at a time! ✦</footer>
+<script>
+const questions=[
+{p:0,q:"When I was five, I _____ cartoons every morning.",a:["used to watch","use to watched","used watch"],c:0,e:"After 'used to', use the base verb: watch."},
+{p:0,q:"My grandfather _____ a bicycle to school.",a:["used ride","used to ride","use to riding"],c:1,e:"The correct structure is used to + base verb."},
+{p:0,q:"We _____ in a small house near the park.",a:["used to live","used living","use to lived"],c:0,e:"Use 'used to live' for a past situation."},
+{p:0,q:"Choose the correct sentence.",a:["She used to played tennis.","She use to play tennis.","She used to play tennis."],c:2,e:"After 'used to', the verb stays in its base form: play."},
+{p:0,q:"My friends _____ football after school.",a:["used to play","used to playing","use to played"],c:0,e:"'Used to play' describes a repeated past activity."},
+{p:0,q:"There _____ a cinema in this street.",a:["used to be","used to was","use to be"],c:0,e:"The expression is 'used to be'."},
+{p:0,q:"I _____ picture books when I was little.",a:["used to read","used to reading","use to readed"],c:0,e:"Use the base verb 'read' after used to."},
+{p:0,q:"Tom used to _____ long hair.",a:["had","having","have"],c:2,e:"The base form is 'have': used to have."},
+{p:0,q:"Every summer, we _____ our cousins.",a:["used to visit","used visit","use to visiting"],c:0,e:"'Used to visit' describes a past routine."},
+{p:0,q:"My sister _____ the piano when she was younger.",a:["used to played","used to play","use to plays"],c:1,e:"Use 'play', not 'played', after used to."},
+{p:0,q:"Choose the correct sentence.",a:["They used to go camping.","They used go camping.","They use to went camping."],c:0,e:"The correct form is used to + go."},
+{p:0,q:"I _____ afraid of dogs, but now I love them.",a:["used to be","used to was","use to be"],c:0,e:"'Used to be' describes a past state."},
+{p:0,q:"Our teacher _____ us stories on Fridays.",a:["used to told","used tell","used to tell"],c:2,e:"The base verb after used to is 'tell'."},
+{p:0,q:"When Dad was a child, he _____ outside all day.",a:["used to play","used to played","use to plays"],c:0,e:"'Used to play' is the correct past-habit structure."},
+{p:0,q:"My family used to _____ near the beach.",a:["lived","living","live"],c:2,e:"After used to, use the base form 'live'."},
+{p:1,q:"I _____ coffee when I was a child.",a:["didn't used to drink","didn't use to drink","don't use to drank"],c:1,e:"After didn't, use 'use to' + base verb."},
+{p:1,q:"She _____ glasses at primary school.",a:["didn't use to wear","didn't used to wear","didn't use to wore"],c:0,e:"The negative structure is didn't use to + wear."},
+{p:1,q:"We _____ a television in our old house.",a:["didn't used to have","didn't use to had","didn't use to have"],c:2,e:"Use 'didn't use to have'."},
+{p:1,q:"Choose the correct sentence.",a:["He didn't use to like fish.","He didn't used to liked fish.","He don't use to like fish."],c:0,e:"After didn't, use 'use to' and the base verb."},
+{p:1,q:"My brother _____ early, but now he does.",a:["didn't use to wake up","didn't used to wake up","didn't use to woke up"],c:0,e:"Use the base verb 'wake' after didn't use to."},
+{p:1,q:"They _____ computers at home many years ago.",a:["didn't used to have","didn't use to have","didn't use to had"],c:1,e:"The correct form is didn't use to have."},
+{p:1,q:"I _____ vegetables, but now I enjoy them.",a:["didn't use to eat","didn't used to ate","didn't use to eating"],c:0,e:"Use 'eat' in its base form."},
+{p:1,q:"Anna didn't use to _____.",a:["danced","dancing","dance"],c:2,e:"After didn't use to, use the base verb 'dance'."},
+{p:1,q:"Our dog _____ inside the house.",a:["didn't use to sleep","didn't used to sleep","didn't use to slept"],c:0,e:"The correct negative form is didn't use to sleep."},
+{p:1,q:"My parents _____ online when they were young.",a:["didn't use to shop","didn't used to shop","didn't use to shopped"],c:0,e:"Use the base verb 'shop'."},
+{p:1,q:"Choose the correct sentence.",a:["I didn't used to ride a bike.","I didn't use to ride a bike.","I didn't use to rode a bike."],c:1,e:"Remember: didn't + use to + base verb."},
+{p:1,q:"There _____ so many cars in this town.",a:["didn't use to be","didn't used to be","didn't use to was"],c:0,e:"Use 'be' after didn't use to."},
+{p:1,q:"When Leo was little, he _____ spicy food.",a:["didn't use to ate","didn't used to eat","didn't use to eat"],c:2,e:"The base form is 'eat'."},
+{p:1,q:"We _____ homework on tablets before.",a:["didn't use to do","didn't used to did","didn't use to doing"],c:0,e:"Use 'do' in the base form."},
+{p:1,q:"My friends didn't use to _____ in this city.",a:["lived","live","living"],c:1,e:"The base verb is 'live'."}
+];
+let index=0,answers=Array(30).fill(null),checked=Array(30).fill(false);const $=id=>document.getElementById(id);
+function render(){const item=questions[index];$('sectionName').textContent=item.p===0?'Part 1 · Used to':"Part 2 · Didn't use to";$('counter').textContent='Activity '+(index+1)+' of 30';$('bar').style.width=((index+1)/30*100)+'%';$('tabUsed').classList.toggle('active',item.p===0);$('tabDidnt').classList.toggle('active',item.p===1);$('prompt').textContent=(index+1)+'. '+item.q;$('options').innerHTML='';
+item.a.forEach((answer,i)=>{const b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+answer;if(answers[index]!==null){b.disabled=true;if(i===item.c)b.classList.add('correct');if(i===answers[index]&&i!==item.c)b.classList.add('wrong')}b.onclick=()=>choose(i);$('options').appendChild(b)});
+$('feedback').textContent=checked[index]?(answers[index]===item.c?'✓ Correct! ':'Not quite. ')+item.e:'';$('feedback').className='feedback '+(checked[index]?(answers[index]===item.c?'good':'bad'):'');$('next').disabled=!checked[index];$('next').textContent=index===29?'See my result':'Next →';$('quiz').style.display='block';$('result').style.display='none'}
+function choose(i){if(answers[index]!==null)return;answers[index]=i;checked[index]=true;render()}
+function next(){if(!checked[index])return;if(index<29){index++;render()}else showResult()}
+function previous(){if(index>0){index--;render()}}
+function switchPart(p){index=p===0?0:15;render()}
+function showResult(){const score=questions.reduce((n,q,i)=>n+(answers[i]===q.c?1:0),0);$('quiz').style.display='none';$('result').style.display='block';$('score').textContent=score+'/30';$('message').textContent=score===30?'Perfect score! Excellent grammar!':score>=24?'Great job! Review any mistakes and keep practising.':score>=15?'Good effort! Read the grammar reminder and try again.':'Keep practising. You can do it!';$('bar').style.width='100%';$('counter').textContent='Completed · 30 activities'}
+function restart(){index=0;answers=Array(30).fill(null);checked=Array(30).fill(false);render()}render();
+</script></body></html>
